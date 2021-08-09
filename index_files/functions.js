@@ -38,7 +38,7 @@ $(window).resize(function() {
 })(jQuery);
 
 function timeElapse(date){
-	var current = Date();
+	var current = new Date();
 	var seconds = (Date.parse(current) - Date.parse(date)) / 1000;
 	var days = Math.floor(seconds / (3600 * 24));
 	seconds = seconds % (3600 * 24);
@@ -55,6 +55,18 @@ function timeElapse(date){
 	if (seconds < 10) {
 		seconds = "0" + seconds;
 	}
-	var result = "第 <span class=\"digit\">" + days + "</span> 天 <span class=\"digit\">" + hours + "</span> 小时 <span class=\"digit\">" + minutes + "</span> 分钟 <span class=\"digit\">" + seconds + "</span> 秒"; 
+	var DistanTime = new Date();
+	DistanTime.setFullYear(current.getFullYear(), 10, -2);
+	//document.write(date);
+	var result;
+	if(Date.parse(current) < Date.parse(DistanTime)){
+		var DistanceSeconds = (Date.parse(DistanTime) - Date.parse(current)) / 1000;
+		var DistanceDays = Math.floor(DistanceSeconds / (3600 * 24));
+		//document.write(DistanceDays);
+		result = "<span class=\"digit\">" + days + "</span> 天 <span class=\"digit\">" + hours + "</span> 小时 <span class=\"digit\">" + minutes + "</span> 分钟 <span class=\"digit\">" + seconds + "</span> 秒" + "<br></span>  --距离纪念日  <span class=\"digit\">" + DistanceDays + "</span> 天"; 
+	}
+	else{
+		result = "<span class=\"digit\">" + days + "</span> 天 <span class=\"digit\">" + hours + "</span> 小时 <span class=\"digit\">" + minutes + "</span> 分钟 <span class=\"digit\">" + seconds + "</span> 秒"; 
+	}
 	$("#clock").html(result);
 }
